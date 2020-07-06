@@ -17,7 +17,7 @@ subject_train <- read.table("train/subject_train.txt")
 df <- cbind(x_test,y_test, subject_test)
 df <- rbind(df, cbind(x_train, y_train, subject_train))
 
-#Reading the features.txt file and getting only the collumn
+#Reading the features.txt file and getting only the column
 #with the feature description
 
 feat <- read.table("features.txt")
@@ -46,6 +46,8 @@ df <- subset(df,select = right_cols)
 
 df <- mutate(df, activity_name = activity_names[df[[80]]])
 
-#Getting the average of each variable by activity
+#Getting the average of each variable by activity and subject
 
 tidy <- df %>% group_by(activity_name, subject) %>% summarise_all(mean)
+
+write.table(tidy, file = "tidy_dataset.txt", row.name=FALSE)
